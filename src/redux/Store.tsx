@@ -1,23 +1,14 @@
-import { applyMiddleware, combineReducers, createStore, Store } from 'redux';
+import { applyMiddleware, combineReducers, createStore, Store, AnyAction } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-
-// Business domain imports
 import AppState from './state/AppState';
-import CharacterReducer from './reducers/CharacterReducer';
+import CharactersListReducer from './reducers/CharactersListReducer';
 
-// Create the root reducer that combines sub-reducers
 const rootReducer = combineReducers<AppState>({
-  characterState: CharacterReducer
+  charactersListState: CharactersListReducer
+  // TODO: add sub-reducers here...
 });
 
-// Create a configure store function of type `AppState`
-export default function configureStore(): Store<AppState, any> {
-  const store = createStore(
-    rootReducer,
-    undefined,
-    composeWithDevTools(applyMiddleware(thunk))
-  );
-
-  return store;
+export default function configureStore(): Store<AppState, AnyAction> {
+  return createStore(rootReducer, undefined, composeWithDevTools(applyMiddleware(thunk)));
 }

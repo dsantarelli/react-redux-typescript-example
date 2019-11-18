@@ -2,12 +2,12 @@ import {
   getCharactersStart,
   getCharactersSuccess,
   getCharactersFailure
-} from '../actions/CharacterActionCreators';
-import ICharacterState from "../state/CharacterState";
+} from '../actions/CharactersListActionCreators';
+import CharactersListState from "../state/CharactersListState";
 import GetCharactersMock from '../../api/rest/GetCharactersMock';
-import CharacterReducer from './CharacterReducer';
+import CharactersListReducer from './CharactersListReducer';
 
-const initialState: ICharacterState = {
+const initialState: CharactersListState = {
   characters: [],
   isFetching: false,
 };
@@ -16,7 +16,7 @@ describe('CharacterReducer action type responses for', () => {
   
   describe('getCharactersStart', () => {
     const action = getCharactersStart();
-    const newState = CharacterReducer(initialState, action);
+    const newState = CharactersListReducer(initialState, action);
 
     it('is fetching', () => {
       expect(newState.isFetching).toBe(true);
@@ -27,7 +27,7 @@ describe('CharacterReducer action type responses for', () => {
 
     const results = GetCharactersMock;
     const action = getCharactersSuccess(results);
-    const newState = CharacterReducer(initialState, action);
+    const newState = CharactersListReducer(initialState, action);
 
     it('fetched characters', () => {
       expect(newState.characters).toEqual(GetCharactersMock);
@@ -41,12 +41,10 @@ describe('CharacterReducer action type responses for', () => {
   describe('getCharactersFailure', () => {
 
     const action = getCharactersFailure('error');
-    const newState = CharacterReducer(initialState, action);
+    const newState = CharactersListReducer(initialState, action);
 
-    it('has not fetched characters', () => {
-      expect(newState.characters).toEqual([]);
-    });
-
+    it('has not fetched characters', () => { expect(newState.characters).toEqual([]); });
     it('is not fetching', () => expect(newState.isFetching).toBe(false));
+    it('is has error', () => expect(newState.error).toBe('error'));
   });
 });

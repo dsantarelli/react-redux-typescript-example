@@ -1,5 +1,5 @@
-import CharacterState from "./CharacterState";
+import CharactersListState from "./CharactersListState";
 
 export default interface AppState {
-  characterState: CharacterState;
+  charactersListState: CharactersListState;
 }

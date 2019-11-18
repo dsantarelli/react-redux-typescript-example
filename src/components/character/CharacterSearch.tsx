@@ -1,10 +1,12 @@
 import React from 'react';
 
 interface Props {
-  searchCharacters: any,
+  searchCharacters(term: string): void
 }
-
-export default class CharacterSearch extends React.Component<Props, { value: string }> {
+interface State {
+  value: string
+}
+export default class CharacterSearch extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
@@ -15,15 +17,13 @@ export default class CharacterSearch extends React.Component<Props, { value: str
     this.setState({ value: '' });
   }
 
-  onChangeHandler = (event: React.ChangeEvent) => {
-    const input = (event.target as HTMLInputElement).value;
-    this.setState({ value: input });
+  onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {    
+    this.setState({ value: event.target.value });
   }
 
-  onSubmitHandler = (event: React.FormEvent) => {
-    const { searchCharacters } = this.props;
+  onSubmitHandler = (event: React.FormEvent) => {    
     event.preventDefault();
-    searchCharacters(this.state.value);
+    this.props.searchCharacters(this.state.value);
   }
 
   render() {

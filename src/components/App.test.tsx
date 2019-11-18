@@ -8,6 +8,8 @@ import CharacterList from './character/CharacterList';
 import ProgressBar from './ProgressBar';
 import App from './App';
 import AppState from '../redux/state/AppState';
+import { Store } from 'redux';
+import Alert from './Alert';
 
 
 describe('App', () => {
@@ -16,14 +18,14 @@ describe('App', () => {
 
   const createEmptyState = (): AppState => {
     return {
-      characterState: {
+      charactersListState: {
         characters: [],
         isFetching: false
       }
     }
   }
 
-  const createTestRenderer = (store: any): ReactTestRenderer => {
+  const createTestRenderer = (store: Store<AppState>): ReactTestRenderer => {
     return renderer.create(
       <Provider store={store}>
         <App />
@@ -39,11 +41,12 @@ describe('App', () => {
 
     it('with a loading progressBar...', () => {
 
-      const state = createEmptyState() as any;
-      state.characterState.isFetching = true;
-
+      const state = createEmptyState();
+      state.charactersListState.isFetching = true;
       const component = createTestRenderer(createStore(state));
+
       expect(component.root.findByType(ProgressBar)).not.toBe(null);
+      expect(() => component.root.findByType(Alert)).toThrow();
       expect(() => component.root.findByType(CharacterList)).toThrow();
     });
 
@@ -54,18 +57,33 @@ describe('App', () => {
 
       expect(list).not.toBe(null);
       expect(list.props.characters.length).toBe(0);
+      expect(() => component.root.findByType(Alert)).toThrow();
       expect(() => component.root.findByType(ProgressBar)).toThrow();
     });
 
     it('with some characters', () => {
 
-      const state = createEmptyState() as any;
-      state.characterState.characters = GetCharactersMock;
-      const component = createTestRenderer(createStore(state));
-      
+      const state = createEmptyState();
+      state.charactersListState.characters = GetCharactersMock;
+      const component = createTestRenderer(createStore(state));      
       const list = component.root.findByType(CharacterList);
+
       expect(list).not.toBe(null);
       expect(list.props.characters).toEqual(GetCharactersMock);
+      expect(() => component.root.findByType(Alert)).toThrow();
+      expect(() => component.root.findByType(ProgressBar)).toThrow();
+    });
+
+    it('with an error', () => {
+
+      const state = createEmptyState();
+      state.charactersListState.error = 'error';
+      const component = createTestRenderer(createStore(state));
+      
+      const alert = component.root.findByType(Alert);
+      expect(alert).not.toBe(null);
+      expect(alert.props.message).toEqual('error');
+      expect(() => component.root.findByType(CharacterList)).toThrow();
       expect(() => component.root.findByType(ProgressBar)).toThrow();
     });
 

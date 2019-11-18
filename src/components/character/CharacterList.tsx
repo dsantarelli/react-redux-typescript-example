@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import Character from '../../api/model/Character';
 import CharacterListItem from './CharacterListItem';
 
 interface Props {
   characters: Character[];
 }
-
-const CharacterList: React.FunctionComponent<Props> = props => {
+const CharacterList: FunctionComponent<Props> = props => {
   const { characters } = props;
 
   return (

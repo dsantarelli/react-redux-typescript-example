@@ -5,8 +5,4 @@ import Root from './components/Root';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const store = configureStore();
-
-ReactDOM.render(
-  <Root store={store} />,
-  document.getElementById('root') as HTMLElement
-);
+ReactDOM.render(<Root store={store} />, document.getElementById('root'));

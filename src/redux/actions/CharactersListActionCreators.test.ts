@@ -8,10 +8,9 @@ import {
   getCharacters,
   searchCharacters,
   getCharactersStart,
-  getCharactersSuccess,
-  getCharactersFailure,
-} from './CharacterActionCreators';
-import CharacterActionTypes from './CharacterActionTypes';
+  getCharactersSuccess
+} from './CharactersListActionCreators';
+import CharacterActionTypes from './CharactersListActionTypes';
 
 
 const mockStore = configureMockStore([thunk]);
@@ -21,7 +20,7 @@ describe('getCharacters', () => {
   beforeEach(() => { moxios.install(); });
   afterEach(() => { moxios.uninstall(); });
 
-  it(`creates ${CharacterActionTypes.GET_CHARACTERS_START}, ${CharacterActionTypes.GET_CHARACTERS_SUCCESS} after successfuly fetching characters`, () => {
+  it(`creates ${CharacterActionTypes.GET_CHARACTERS_LIST_START}, ${CharacterActionTypes.GET_CHARACTERS_LIST_SUCCESS} after successfuly fetching characters`, () => {
 
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
@@ -47,7 +46,7 @@ describe('getCharacters', () => {
     });
   });
 
-  it(`creates ${CharacterActionTypes.GET_CHARACTERS_START}, ${CharacterActionTypes.GET_CHARACTERS_FAILURE} after failing to fetch characters`, () => {
+  it(`creates ${CharacterActionTypes.GET_CHARACTERS_LIST_START}, ${CharacterActionTypes.GET_CHARACTERS_LIST_FAILURE} after failing to fetch characters`, () => {
 
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
@@ -65,11 +64,11 @@ describe('getCharacters', () => {
       expect(actions.length).toBe(2);
 
       const getCharactersStartAction = actions[0];
-      expect(getCharactersStartAction.type).toBe(CharacterActionTypes.GET_CHARACTERS_START);
+      expect(getCharactersStartAction.type).toBe(CharacterActionTypes.GET_CHARACTERS_LIST_START);
       expect(getCharactersStartAction.isFetching).toBe(true);
 
       const getCharactersFailureAction = actions[1];
-      expect(getCharactersFailureAction.type).toBe(CharacterActionTypes.GET_CHARACTERS_FAILURE);
+      expect(getCharactersFailureAction.type).toBe(CharacterActionTypes.GET_CHARACTERS_LIST_FAILURE);
       expect(getCharactersFailureAction.isFetching).toBe(false);
       expect(getCharactersFailureAction.error).not.toBe(null);      
       expect(getCharactersFailureAction.error).toBeDefined();
@@ -84,7 +83,7 @@ describe('searchCharacters', () => {
   beforeEach(() => { moxios.install(); });
   afterEach(() => { moxios.uninstall(); });
 
-  it(`creates ${CharacterActionTypes.GET_CHARACTERS_START}, ${CharacterActionTypes.GET_CHARACTERS_SUCCESS} after successfuly fetching characters`, () => {
+  it(`creates ${CharacterActionTypes.GET_CHARACTERS_LIST_START}, ${CharacterActionTypes.GET_CHARACTERS_LIST_SUCCESS} after successfuly fetching characters`, () => {
 
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
@@ -111,7 +110,7 @@ describe('searchCharacters', () => {
 
   });
 
-  it(`creates ${CharacterActionTypes.GET_CHARACTERS_START}, ${CharacterActionTypes.GET_CHARACTERS_FAILURE} after failing to fetch characters`, () => {
+  it(`creates ${CharacterActionTypes.GET_CHARACTERS_LIST_START}, ${CharacterActionTypes.GET_CHARACTERS_LIST_FAILURE} after failing to fetch characters`, () => {
 
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
@@ -128,11 +127,11 @@ describe('searchCharacters', () => {
       expect(actions.length).toBe(2);
 
       const getCharactersStartAction = actions[0];
-      expect(getCharactersStartAction.type).toBe(CharacterActionTypes.GET_CHARACTERS_START);
+      expect(getCharactersStartAction.type).toBe(CharacterActionTypes.GET_CHARACTERS_LIST_START);
       expect(getCharactersStartAction.isFetching).toBe(true);
 
       const getCharactersFailureAction = actions[1];
-      expect(getCharactersFailureAction.type).toBe(CharacterActionTypes.GET_CHARACTERS_FAILURE);
+      expect(getCharactersFailureAction.type).toBe(CharacterActionTypes.GET_CHARACTERS_LIST_FAILURE);
       expect(getCharactersFailureAction.isFetching).toBe(false);
       expect(getCharactersFailureAction.error).not.toBe(null); 
       expect(getCharactersFailureAction.error).toBeDefined();      

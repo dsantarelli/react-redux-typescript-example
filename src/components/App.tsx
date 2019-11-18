@@ -6,18 +6,20 @@ import Character from '../api/model/Character';
 import {
   getCharacters,
   searchCharacters
-} from '../redux/actions/CharacterActionCreators';
+} from '../redux/actions/CharactersListActionCreators';
 import CharacterList from './character/CharacterList';
 import CharacterSearch from './character/CharacterSearch';
 import NavigationBar from './NavigationBar';
 import ProgressBar from './ProgressBar';
+import Alert, { AlertType } from './Alert';
 
 
 interface Props {
-  getCharacters: any,
-  searchCharacters: any,
+  getCharacters(): void,
+  searchCharacters(term: string): void,
   characters: Character[],
-  isFetching: boolean
+  isFetching: boolean,
+  error?: string
 }
 export class App extends React.Component<Props> {
 
@@ -29,25 +31,21 @@ export class App extends React.Component<Props> {
 
   public render() {
 
-    const {
-      characters,
-      searchCharacters,
-      isFetching
-    } = this.props;
+    const { characters, searchCharacters, isFetching, error } = this.props;
+
+    let content = null;
+    if (isFetching) content = <ProgressBar />;
+    else {
+      if (error) content = <Alert type={AlertType.DANGER} message={error} />;
+      else content = <CharacterList characters={characters} />;
+    }
 
     return (
-      <div className="app-container">   
-
+      <div className="app-container">
         <NavigationBar>
           <CharacterSearch searchCharacters={searchCharacters} />
-        </NavigationBar>
-
-        { isFetching ? (
-          <ProgressBar></ProgressBar>
-        ) : (
-          <CharacterList characters={characters} />
-        )}
-        
+        </NavigationBar>      
+        {content}
       </div>
     );
   }
@@ -57,8 +55,9 @@ export class App extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState) => {
   return {
-    characters: state.characterState.characters,
-    isFetching: state.characterState.isFetching
+    characters: state.charactersListState.characters,
+    isFetching: state.charactersListState.isFetching,
+    error: state.charactersListState.error
   };
 };
 

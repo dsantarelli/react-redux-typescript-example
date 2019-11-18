@@ -1,5 +1,10 @@
 import Character from '../../api/model/Character';
-import CharacterActionTypes from './CharactersListActionTypes';
+
+export enum CharacterActionTypes {
+  GET_CHARACTERS_LIST_START = 'GET_CHARACTERS_LIST_START',
+  GET_CHARACTERS_LIST_SUCCESS = 'GET_CHARACTERS_LIST_SUCCESS',
+  GET_CHARACTERS_LIST_FAILURE = 'GET_CHARACTERS_LIST_FAILURE'
+}
 
 export interface GetCharactersListStartAction {
   type: CharacterActionTypes.GET_CHARACTERS_LIST_START,

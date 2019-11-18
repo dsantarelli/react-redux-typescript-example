@@ -10,7 +10,7 @@ import {
   getCharactersStart,
   getCharactersSuccess
 } from './CharactersListActionCreators';
-import CharacterActionTypes from './CharactersListActionTypes';
+import { CharacterActionTypes } from './CharactersListActions';
 
 
 const mockStore = configureMockStore([thunk]);

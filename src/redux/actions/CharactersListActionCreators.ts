@@ -1,10 +1,10 @@
 import { Dispatch } from 'redux';
 import { StarWarsApi } from '../../api/rest/StarWarsApi';
-import CharacterActionTypes from './CharactersListActionTypes';
 import {
   GetCharactersListStartAction,
   GetCharactersListSuccessAction,
-  GetCharactersListFailureAction
+  GetCharactersListFailureAction,
+  CharacterActionTypes
 } from './CharactersListActions';
 import Character from '../../api/model/Character';
 

@@ -1,7 +1,6 @@
 import { Reducer } from 'redux';
-import CharacterActionTypes from '../actions/CharactersListActionTypes';
 import CharactersListState from '../state/CharactersListState';
-import CharactersListActions from '../actions/CharactersListActions';
+import CharactersListActions, { CharacterActionTypes } from '../actions/CharactersListActions';
 
 const initialState: CharactersListState = {
   characters: [],

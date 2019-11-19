@@ -17,8 +17,8 @@ const mockStore = configureMockStore([thunk]);
 
 describe('getCharacters', () => {
 
-  beforeEach(() => { moxios.install(); });
-  afterEach(() => { moxios.uninstall(); });
+  beforeEach(() => moxios.install());
+  afterEach(() => moxios.uninstall());
 
   it(`creates ${CharacterActionTypes.GET_CHARACTERS_LIST_START}, ${CharacterActionTypes.GET_CHARACTERS_LIST_SUCCESS} after successfuly fetching characters`, () => {
 
@@ -104,10 +104,8 @@ describe('searchCharacters', () => {
     };    
     const store = mockStore(initialState);
 
-    return store.dispatch<any>(searchCharacters('Luke')).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
-
+    return store.dispatch<any>(searchCharacters('Luke'))
+                .then(() => expect(store.getActions()).toEqual(expectedActions));
   });
 
   it(`creates ${CharacterActionTypes.GET_CHARACTERS_LIST_START}, ${CharacterActionTypes.GET_CHARACTERS_LIST_FAILURE} after failing to fetch characters`, () => {

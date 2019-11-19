@@ -3,7 +3,7 @@ import { StarWarsApi } from './StarWarsApi';
 
 // Tests
 describe('getCharacters', () => {
-  const restDataSource = new StarWarsApi();
+  const api = new StarWarsApi();
 
   beforeEach(() => {
     axios.get = jest.fn();
@@ -11,7 +11,7 @@ describe('getCharacters', () => {
 
   describe('getCharacters', () => {
     it('httpClient is called as expected', () => {
-      restDataSource.getCharacters();
+      api.getCharacters();
       expect(axios.get).toHaveBeenCalledWith('https://swapi.co/api/people/');
     });
   });
@@ -24,7 +24,7 @@ describe('getCharacters', () => {
     })
 
     it('httpClient is called as expected', () => {
-      restDataSource.searchCharacters(searchString);
+      api.searchCharacters(searchString);
       expect(axios.get).toHaveBeenCalledWith(`https://swapi.co/api/people/?search=${searchString}`);
     });
   });

@@ -18,9 +18,7 @@ describe('CharacterReducer action type responses for', () => {
     const action = getCharactersStart();
     const newState = CharactersListReducer(initialState, action);
 
-    it('is fetching', () => {
-      expect(newState.isFetching).toBe(true);
-    });
+    it('is fetching', () => expect(newState.isFetching).toBe(true));
   });
 
   describe('getCharactersSuccess', () => {
@@ -29,13 +27,8 @@ describe('CharacterReducer action type responses for', () => {
     const action = getCharactersSuccess(results);
     const newState = CharactersListReducer(initialState, action);
 
-    it('fetched characters', () => {
-      expect(newState.characters).toEqual(GetCharactersMock);
-    });
-
-    it('is not fetching', () => {
-      expect(newState.isFetching).toBe(false);
-    });
+    it('fetched characters', () => expect(newState.characters).toEqual(GetCharactersMock));
+    it('is not fetching', () => expect(newState.isFetching).toBe(false));
   });
 
   describe('getCharactersFailure', () => {
@@ -43,7 +36,7 @@ describe('CharacterReducer action type responses for', () => {
     const action = getCharactersFailure('error');
     const newState = CharactersListReducer(initialState, action);
 
-    it('has not fetched characters', () => { expect(newState.characters).toEqual([]); });
+    it('has not fetched characters', () => expect(newState.characters).toEqual([]));
     it('is not fetching', () => expect(newState.isFetching).toBe(false));
     it('is has error', () => expect(newState.error).toBe('error'));
   });

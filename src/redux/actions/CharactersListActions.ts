@@ -23,10 +23,7 @@ export interface GetCharactersListFailureAction {
   error: string
 }
 
-// Combine the action types with a union
-type CharactersListActions = 
+export type CharactersListActions =
   GetCharactersListStartAction
   | GetCharactersListSuccessAction
   | GetCharactersListFailureAction;
-
-export default CharactersListActions;

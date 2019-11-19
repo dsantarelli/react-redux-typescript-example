@@ -1,12 +1,12 @@
 import { Reducer } from 'redux';
 import CharactersListState from '../state/CharactersListState';
-import CharactersListActions, { CharacterActionTypes } from '../actions/CharactersListActions';
+import { CharacterActionTypes, CharactersListActions } from '../actions/CharactersListActions';
 
 const initialState: CharactersListState = {
   characters: [],
   isFetching: false
 };
-const CharactersListReducer: Reducer<CharactersListState, CharactersListActions> = (state = initialState, action) => {
+const CharactersListReducer: Reducer<CharactersListState, CharactersListActions> = (state = initialState, action: CharactersListActions) => {
   
   switch (action.type) {
     case CharacterActionTypes.GET_CHARACTERS_LIST_START: {

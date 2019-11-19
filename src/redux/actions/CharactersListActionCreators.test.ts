@@ -80,8 +80,8 @@ describe('getCharacters', () => {
 
 describe('searchCharacters', () => {
 
-  beforeEach(() => { moxios.install(); });
-  afterEach(() => { moxios.uninstall(); });
+  beforeEach(() => moxios.install());
+  afterEach(() => moxios.uninstall());
 
   it(`creates ${CharacterActionTypes.GET_CHARACTERS_LIST_START}, ${CharacterActionTypes.GET_CHARACTERS_LIST_SUCCESS} after successfuly fetching characters`, () => {
 

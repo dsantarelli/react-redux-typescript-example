@@ -5,7 +5,7 @@ import AppState from './state/AppState';
 import CharactersListReducer from './reducers/CharactersListReducer';
 
 const rootReducer = combineReducers<AppState>({
-  charactersListState: CharactersListReducer
+  charactersListReducer: CharactersListReducer
   // TODO: add sub-reducers here...
 });
 

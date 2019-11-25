@@ -8,7 +8,7 @@ import App from './App';
 import AppState from '../redux/state/AppState';
 import { Store } from 'redux';
 import CharacterListContainer from './character/CharacterListContainer';
-import SelectedCharacterDialog from './character/SelectedCharacterDialog';
+import CharacterDetailsDialog from './character/CharacterDetailsDialog';
 
 
 describe('App', () => {
@@ -60,7 +60,7 @@ describe('App', () => {
       beforeEach(() => {
         component = createTestRenderer(createMockStore(state));
         characterListContainer = component.root.findByType(CharacterListContainer);
-        selectedCharacterDialog = component.root.findByType(SelectedCharacterDialog);
+        selectedCharacterDialog = component.root.findByType(CharacterDetailsDialog);
       })
 
       it('opened', () => {

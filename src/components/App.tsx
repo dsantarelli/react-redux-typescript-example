@@ -9,7 +9,7 @@ import CharacterDetailsState from '../redux/state/CharacterDetailsState';
 import { getCharacterDetails } from '../redux/actions/CharacterDetailsActionCreators';
 import Character from '../api/model/Character';
 import CharacterListContainer from './character/CharacterListContainer';
-import SelectedCharacterDialog from './character/SelectedCharacterDialog';
+import CharacterDetailsDialog from './character/CharacterDetailsDialog';
 
 
 interface Props {
@@ -61,7 +61,7 @@ export class App extends React.Component<Props, State> {
           charactersList={charactersList}
           onCharacterSelected={this.onCharacterSelected} />
 
-        <SelectedCharacterDialog
+        <CharacterDetailsDialog
           isOpen={this.state.isSelectedCharacterModalOpen}
           characterDetails={characterDetails}
           onClose={() => this.closeSelectedCharacterDialog()} />

@@ -10,7 +10,7 @@ interface Props {
     characterDetails: CharacterDetailsState,
     onClose: () => void;
 }
-const SelectedCharacterDialog: FunctionComponent<Props> = (props: Props) => {
+const CharacterDetailsDialog: FunctionComponent<Props> = (props: Props) => {
 
     const { characterDetails, isOpen, onClose } = props;
 
@@ -30,4 +30,4 @@ const SelectedCharacterDialog: FunctionComponent<Props> = (props: Props) => {
         }
     </ModalDialog>
 };
-export default SelectedCharacterDialog;
+export default CharacterDetailsDialog;

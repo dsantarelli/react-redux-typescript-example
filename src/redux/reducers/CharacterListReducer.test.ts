@@ -12,8 +12,8 @@ const initialState: CharactersListState = {
   isFetching: false,
 };
 
-describe('CharacterReducer action type responses for', () => {
-  
+describe('CharactersListReducer action type responses for', () => {
+
   describe('getCharactersStart', () => {
     const action = getCharactersStart();
     const newState = CharactersListReducer(initialState, action);

@@ -2,7 +2,6 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 
-// App imports
 import GetCharactersMock from '../../api/rest/GetCharactersMock';
 import {
   getCharacters,
@@ -10,7 +9,7 @@ import {
   getCharactersStart,
   getCharactersSuccess
 } from './CharactersListActionCreators';
-import { CharacterActionTypes } from './CharactersListActions';
+import { CharacterActionTypes } from './CharactersActions';
 
 
 const mockStore = configureMockStore([thunk]);
@@ -26,7 +25,7 @@ describe('getCharacters', () => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 200,
-        response: { results: GetCharactersMock } 
+        response: { results: GetCharactersMock }
       });
     });
 
@@ -51,28 +50,26 @@ describe('getCharacters', () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
-        status: 500        
+        status: 500
       });
     });
-    
+
     const store = mockStore({ characters: [] });
 
     return store.dispatch<any>(getCharacters()).then(() => {
-      
+
       const actions = store.getActions();
-      
+
       expect(actions.length).toBe(2);
 
       const getCharactersStartAction = actions[0];
       expect(getCharactersStartAction.type).toBe(CharacterActionTypes.GET_CHARACTERS_LIST_START);
-      expect(getCharactersStartAction.isFetching).toBe(true);
 
       const getCharactersFailureAction = actions[1];
       expect(getCharactersFailureAction.type).toBe(CharacterActionTypes.GET_CHARACTERS_LIST_FAILURE);
-      expect(getCharactersFailureAction.isFetching).toBe(false);
-      expect(getCharactersFailureAction.error).not.toBe(null);      
+      expect(getCharactersFailureAction.error).not.toBe(null);
       expect(getCharactersFailureAction.error).toBeDefined();
-      
+
     });
   });
 });
@@ -89,7 +86,7 @@ describe('searchCharacters', () => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 200,
-        response: { results: GetCharactersMock } 
+        response: { results: GetCharactersMock }
       });
     });
 
@@ -101,11 +98,11 @@ describe('searchCharacters', () => {
     const initialState = {
       characters: [],
       isFetching: false,
-    };    
+    };
     const store = mockStore(initialState);
 
     return store.dispatch<any>(searchCharacters('Luke'))
-                .then(() => expect(store.getActions()).toEqual(expectedActions));
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
   });
 
   it(`creates ${CharacterActionTypes.GET_CHARACTERS_LIST_START}, ${CharacterActionTypes.GET_CHARACTERS_LIST_FAILURE} after failing to fetch characters`, () => {
@@ -113,26 +110,24 @@ describe('searchCharacters', () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
-        status: 500        
+        status: 500
       });
     });
-    
+
     const store = mockStore({ characters: [] });
 
     return store.dispatch<any>(searchCharacters('Luke')).then(() => {
-      
+
       const actions = store.getActions();
       expect(actions.length).toBe(2);
 
       const getCharactersStartAction = actions[0];
       expect(getCharactersStartAction.type).toBe(CharacterActionTypes.GET_CHARACTERS_LIST_START);
-      expect(getCharactersStartAction.isFetching).toBe(true);
 
       const getCharactersFailureAction = actions[1];
       expect(getCharactersFailureAction.type).toBe(CharacterActionTypes.GET_CHARACTERS_LIST_FAILURE);
-      expect(getCharactersFailureAction.isFetching).toBe(false);
-      expect(getCharactersFailureAction.error).not.toBe(null); 
-      expect(getCharactersFailureAction.error).toBeDefined();      
+      expect(getCharactersFailureAction.error).not.toBe(null);
+      expect(getCharactersFailureAction.error).toBeDefined();
 
     });
   });

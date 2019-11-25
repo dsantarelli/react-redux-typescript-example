@@ -1,25 +1,27 @@
 import React from 'react';
-import renderer, { ReactTestRenderer } from 'react-test-renderer';
+import renderer, { ReactTestRenderer, ReactTestInstance } from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import GetCharactersMock from '../api/rest/GetCharactersMock';
-import CharacterList from './character/CharacterList';
-import ProgressBar from './ProgressBar';
 import App from './App';
 import AppState from '../redux/state/AppState';
 import { Store } from 'redux';
-import Alert from './Alert';
+import CharacterListContainer from './character/CharacterListContainer';
+import SelectedCharacterDialog from './character/SelectedCharacterDialog';
 
 
 describe('App', () => {
 
-  const createStore = configureStore<AppState>([thunk]);
+  const createMockStore = configureStore<AppState>([thunk]);
 
   const createEmptyState = (): AppState => {
     return {
       charactersListState: {
         characters: [],
+        isFetching: false
+      },
+      characterDetailsState: {
         isFetching: false
       }
     }
@@ -36,56 +38,44 @@ describe('App', () => {
   describe('should be rendered', () => {
 
     it('inside a redux Provider', () => {
-      createTestRenderer(createStore(createEmptyState()));
+      createTestRenderer(createMockStore(createEmptyState()));
     });
 
-    it('with a loading progressBar...', () => {
+    it('and it should match the expected snapshot', () => {
+      expect(createTestRenderer(
+        createMockStore(createEmptyState()))
+        .toJSON())
+        .toMatchSnapshot();
+    });
 
+    describe('if a character is selected, the modal dialog should be', () => {
+
+      const characters = GetCharactersMock;
       const state = createEmptyState();
-      state.charactersListState.isFetching = true;
-      const component = createTestRenderer(createStore(state));
+      state.charactersListState.characters = characters;
+      let component: ReactTestRenderer;
+      let characterListContainer: ReactTestInstance;
+      let selectedCharacterDialog: ReactTestInstance;
 
-      expect(component.root.findByType(ProgressBar)).not.toBe(null);
-      expect(() => component.root.findByType(Alert)).toThrow();
-      expect(() => component.root.findByType(CharacterList)).toThrow();
+      beforeEach(() => {
+        component = createTestRenderer(createMockStore(state));
+        characterListContainer = component.root.findByType(CharacterListContainer);
+        selectedCharacterDialog = component.root.findByType(SelectedCharacterDialog);
+      })
+
+      it('opened', () => {
+        expect(selectedCharacterDialog.props.isOpen).toBe(false);
+        characterListContainer.props.onCharacterSelected(characters[0]);
+        expect(selectedCharacterDialog.props.isOpen).toBe(true);
+      });
+
+      it('and then it can be closed', () => {
+        expect(selectedCharacterDialog.props.isOpen).toBe(false);
+        characterListContainer.props.onCharacterSelected(characters[0]);
+        expect(selectedCharacterDialog.props.isOpen).toBe(true);
+        selectedCharacterDialog.props.onClose();
+        expect(selectedCharacterDialog.props.isOpen).toBe(false);
+      });
     });
-
-    it('with an empty character list', () => {
-
-      const component = createTestRenderer(createStore(createEmptyState()));
-      const list = component.root.findByType(CharacterList);
-
-      expect(list).not.toBe(null);
-      expect(list.props.characters.length).toBe(0);
-      expect(() => component.root.findByType(Alert)).toThrow();
-      expect(() => component.root.findByType(ProgressBar)).toThrow();
-    });
-
-    it('with some characters', () => {
-
-      const state = createEmptyState();
-      state.charactersListState.characters = GetCharactersMock;
-      const component = createTestRenderer(createStore(state));      
-      const list = component.root.findByType(CharacterList);
-
-      expect(list).not.toBe(null);
-      expect(list.props.characters).toEqual(GetCharactersMock);
-      expect(() => component.root.findByType(Alert)).toThrow();
-      expect(() => component.root.findByType(ProgressBar)).toThrow();
-    });
-
-    it('with an error', () => {
-
-      const state = createEmptyState();
-      state.charactersListState.error = 'error';
-      const component = createTestRenderer(createStore(state));
-      
-      const alert = component.root.findByType(Alert);
-      expect(alert).not.toBe(null);
-      expect(alert.props.message).toEqual('error');
-      expect(() => component.root.findByType(CharacterList)).toThrow();
-      expect(() => component.root.findByType(ProgressBar)).toThrow();
-    });
-
   });
 });

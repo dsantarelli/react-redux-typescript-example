@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-  searchCharacters(term: string): void
+  onSearchCharacters(term: string): void
 }
 interface State {
   value: string
@@ -17,13 +17,13 @@ export default class CharacterSearch extends React.Component<Props, State> {
     this.setState({ value: '' });
   }
 
-  onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {    
+  onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ value: event.target.value });
   }
 
-  onSubmitHandler = (event: React.FormEvent) => {    
+  onSubmitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    this.props.searchCharacters(this.state.value);
+    this.props.onSearchCharacters(this.state.value);
   }
 
   render() {
@@ -39,7 +39,7 @@ export default class CharacterSearch extends React.Component<Props, State> {
           value={this.state.value}
           onChange={this.onChangeHandler} />
         <button
-          className="btn btn-primary my-2 my-sm-0"
+          className="btn btn-secondary my-2 my-sm-0"
           type="submit"
         >Search</button>
       </form>

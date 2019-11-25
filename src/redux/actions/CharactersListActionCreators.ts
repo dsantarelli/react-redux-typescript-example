@@ -5,37 +5,34 @@ import {
   GetCharactersListSuccessAction,
   GetCharactersListFailureAction,
   CharacterActionTypes
-} from './CharactersListActions';
+} from './CharactersActions';
 import Character from '../../api/model/Character';
 
 
 export const getCharactersStart = (): GetCharactersListStartAction => {
   return {
-    type: CharacterActionTypes.GET_CHARACTERS_LIST_START,
-    isFetching: true,
+    type: CharacterActionTypes.GET_CHARACTERS_LIST_START
   };
 }
 
 export const getCharactersSuccess = (results: Character[]): GetCharactersListSuccessAction => {
   return {
     type: CharacterActionTypes.GET_CHARACTERS_LIST_SUCCESS,
-    characters: results,
-    isFetching: false,
+    characters: results
   };
 }
 
 export const getCharactersFailure = (error: string): GetCharactersListFailureAction => {
   return {
     type: CharacterActionTypes.GET_CHARACTERS_LIST_FAILURE,
-    isFetching: false,
     error: error
   };
 }
 
-export const getCharacters = () => {  
-  return (dispatch: Dispatch) => {    
+export const getCharacters = () => {
+  return (dispatch: Dispatch) => {
 
-    dispatch(getCharactersStart());      
+    dispatch(getCharactersStart());
     return new StarWarsApi()
       .getCharacters()
       .then((response) => dispatch(getCharactersSuccess(response.data.results)))
@@ -43,10 +40,10 @@ export const getCharacters = () => {
   };
 };
 
-export const searchCharacters = (term: string) => {  
+export const searchCharacters = (term: string) => {
   return (dispatch: Dispatch) => {
 
-    dispatch(getCharactersStart());    
+    dispatch(getCharactersStart());
     return new StarWarsApi()
       .searchCharacters(term)
       .then((response) => dispatch(getCharactersSuccess(response.data.results)))

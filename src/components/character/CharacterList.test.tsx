@@ -5,14 +5,14 @@ import { shallow } from 'enzyme';
 import Character from '../../api/model/Character';
 import GetCharactersMock from '../../api/rest/GetCharactersMock';
 import CharacterList from './CharacterList';
-import CharacterListItem from './CharacterListItem';
+import { act } from 'react-test-renderer';
 
 describe('CharacterList', () => {
 
   describe('without characters', () => {
 
     const characters: Character[] = [];
-    const wrapper = shallow(<CharacterList characters={characters} />);
+    const wrapper = shallow(<CharacterList characters={characters} onCharacterSelected={() => {}} />);
 
     describe('renders', () => {
       it('empty undordered list', () => {
@@ -24,15 +24,20 @@ describe('CharacterList', () => {
 
   describe('with characters', () => {
 
+    const onClickMock = jest.fn();
     const characters: Character[] = GetCharactersMock;
-    const wrapper = shallow(<CharacterList characters={characters} />);
+    const wrapper = shallow(<CharacterList characters={characters} onCharacterSelected={onClickMock} />);
     const character: Character = characters[0];
 
     describe('renders', () => {
       it('a list item per character', () => {
-        const element = <CharacterListItem key={character.name} character={character} />;
-        expect(wrapper.contains(element)).toEqual(true);
-      });
+        const item = wrapper.find('.list-group-item');        
+        expect(item.length).toEqual(1);
+        expect(item.text()).toEqual(character.name);       
+        expect(item.props().onClick).toBeDefined();
+        act(() => { item.simulate('click'); });
+        expect(onClickMock).toHaveBeenCalled();
+      });    
     });
   });
 });

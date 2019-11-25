@@ -6,7 +6,7 @@ import CharacterSearch from './CharacterSearch';
 describe('CharacterSearch', () => {
 
   const searchCharacters = jest.fn();
-  const wrapper = mount(<CharacterSearch searchCharacters={searchCharacters} />);
+  const wrapper = mount(<CharacterSearch onSearchCharacters={searchCharacters} />);
 
   describe('renders', () => {
 
@@ -20,14 +20,14 @@ describe('CharacterSearch', () => {
       const initialValue = '';
       const newValue = 'Ch-ch-changes';
       const input = wrapper.find('input');
-      
+
       expect(wrapper.state('value')).toEqual(initialValue);
       input.simulate('change', { target: { value: newValue } })
       expect(wrapper.state('value')).toEqual(newValue);
     });
 
     it('handles submission', () => {
-      
+
       const form = wrapper.find('form');
       form.simulate('submit');
       expect(searchCharacters).toHaveBeenCalledTimes(1);

@@ -12,10 +12,10 @@ describe('Root', () => {
     it('App', () => {
       const element = <App />;
       expect(wrapper.contains(element)).toEqual(true);
-    });  
+    });
   });
 
   describe('properties', () => {
-    it('store', () => expect(wrapper.props().store).toEqual(store));  
+    it('store', () => expect(wrapper.props().store).toEqual(store));
   });
 });

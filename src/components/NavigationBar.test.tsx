@@ -11,7 +11,6 @@ describe('NavigationBar', () => {
     </NavigationBar>
   );
 
-
   describe('renders', () => {
 
     it('should load default text', () => {

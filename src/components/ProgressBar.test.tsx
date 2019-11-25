@@ -4,12 +4,17 @@ import { shallow } from 'enzyme';
 import ProgressBar from './ProgressBar';
 
 describe('ProgressBar', () => {
-  
+
   describe('renders', () => {
-    
+
     it('loading text', () => {
       const wrapper = shallow(<ProgressBar />);
       expect(wrapper.contains('Loading...')).toBe(true);
+    });
+
+    it('custom text', () => {
+      const wrapper = shallow(<ProgressBar message="Hello!" />);
+      expect(wrapper.contains('Hello!')).toBe(true);
     });
 
     it('100%', () => {

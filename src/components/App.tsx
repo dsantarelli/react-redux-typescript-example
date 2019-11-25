@@ -1,63 +1,80 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import AppState from '../redux/state/AppState';
-import Character from '../api/model/Character';
-import {
-  getCharacters,
-  searchCharacters
-} from '../redux/actions/CharactersListActionCreators';
-import CharacterList from './character/CharacterList';
+import { getCharacters, searchCharacters } from '../redux/actions/CharactersListActionCreators';
 import CharacterSearch from './character/CharacterSearch';
 import NavigationBar from './NavigationBar';
-import ProgressBar from './ProgressBar';
-import Alert, { AlertType } from './Alert';
+import CharactersListState from '../redux/state/CharactersListState';
+import CharacterDetailsState from '../redux/state/CharacterDetailsState';
+import { getCharacterDetails } from '../redux/actions/CharacterDetailsActionCreators';
+import Character from '../api/model/Character';
+import CharacterListContainer from './character/CharacterListContainer';
+import SelectedCharacterDialog from './character/SelectedCharacterDialog';
 
 
 interface Props {
   getCharacters(): void,
   searchCharacters(term: string): void,
-  characters: Character[],
-  isFetching: boolean,
-  error?: string
+  getCharacterDetails(character: Character): void,
+  charactersList: CharactersListState,
+  characterDetails: CharacterDetailsState
 }
-export class App extends React.Component<Props> {
+interface State {
+  isSelectedCharacterModalOpen: boolean
+}
+export class App extends React.Component<Props, State> {
 
-  public componentDidMount() {
-    if (this.props.characters.length === 0) {
+  constructor(props: Props) {
+    super(props);
+    this.state = { isSelectedCharacterModalOpen: false };
+  }
+
+  componentDidMount = () => {
+    if (this.props.charactersList.characters.length === 0) {
       this.props.getCharacters();
     }
   }
 
+  onCharacterSelected = (character: Character) => {
+    this.openSelectedCharacterDialog();
+    this.props.getCharacterDetails(character);
+  }
+
+  openSelectedCharacterDialog = () => {
+    this.setState({ isSelectedCharacterModalOpen: true });
+  }
+
+  closeSelectedCharacterDialog = () => {
+    this.setState({ isSelectedCharacterModalOpen: false });
+  }
+
   public render() {
-
-    const { characters, searchCharacters, isFetching, error } = this.props;
-
-    let content = null;
-    if (isFetching) content = <ProgressBar />;
-    else {
-      if (error) content = <Alert type={AlertType.DANGER} message={error} />;
-      else content = <CharacterList characters={characters} />;
-    }
-
+    const { searchCharacters, charactersList, characterDetails } = this.props;
     return (
       <div className="app-container">
+
         <NavigationBar>
-          <CharacterSearch searchCharacters={searchCharacters} />
-        </NavigationBar>      
-        {content}
+          <CharacterSearch onSearchCharacters={searchCharacters} />
+        </NavigationBar>
+
+        <CharacterListContainer
+          charactersList={charactersList}
+          onCharacterSelected={this.onCharacterSelected} />
+
+        <SelectedCharacterDialog
+          isOpen={this.state.isSelectedCharacterModalOpen}
+          characterDetails={characterDetails}
+          onClose={() => this.closeSelectedCharacterDialog()} />
+
       </div>
     );
   }
 }
 
-////////////// REDUX ///////////////
-
 const mapStateToProps = (state: AppState) => {
   return {
-    characters: state.charactersListState.characters,
-    isFetching: state.charactersListState.isFetching,
-    error: state.charactersListState.error
+    charactersList: state.charactersListState,
+    characterDetails: state.characterDetailsState
   };
 };
 
@@ -65,6 +82,7 @@ const mapDispatchToProps = (dispatch: Function) => {
   return {
     getCharacters: () => dispatch(getCharacters()),
     searchCharacters: (term: string) => dispatch(searchCharacters(term)),
+    getCharacterDetails: (character: Character) => dispatch(getCharacterDetails(character)),
   }
 }
 

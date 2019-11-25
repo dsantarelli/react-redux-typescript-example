@@ -1,20 +1,23 @@
 import React, { FunctionComponent } from 'react';
 import Character from '../../api/model/Character';
-import CharacterListItem from './CharacterListItem';
+import './CharacterList.css';
 
 interface Props {
   characters: Character[];
+  onCharacterSelected: (character: Character) => void
 }
 const CharacterList: FunctionComponent<Props> = props => {
-  const { characters } = props;
 
+  const { characters, onCharacterSelected } = props;
   return (
     <ul className="list-group">
-      {characters && characters.map(character => {
-        return (
-          <CharacterListItem key={character.name} character={character} />
-        );
-      })}
+      {characters.map(character =>
+        <li key={character.name}
+          className="list-group-item"
+          onClick={() => onCharacterSelected(character)}>
+          {character.name}
+        </li>
+      )}
     </ul>
   );
 };

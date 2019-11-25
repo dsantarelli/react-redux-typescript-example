@@ -9,9 +9,9 @@ describe('Alert', () => {
 
   describe('renders', () => {
     it('message', () => { expect(wrapper.contains('Hello')).toBe(true); });
-    it('alert-type', () => { 
-        expect(wrapper.hasClass('alert')).toBe(true); 
-        expect(wrapper.hasClass('alert-info')).toBe(true); 
+    it('alert-type', () => {
+      expect(wrapper.hasClass('alert')).toBe(true);
+      expect(wrapper.hasClass('alert-info')).toBe(true);
     });
   });
 });

@@ -1,13 +1,13 @@
 import React, { FunctionComponent } from 'react';
 
 interface Props {
- type: AlertType,
- message: string
+    type: AlertType,
+    message: string
 }
-const Alert : FunctionComponent<Props> = (props: Props) => {
+const Alert: FunctionComponent<Props> = (props: Props) => {
 
     const className = "alert alert-" + props.type.toLowerCase();
-    return (        
+    return (
         <div className={className} role="alert">
             {props.message}
         </div>
@@ -23,6 +23,6 @@ export enum AlertType {
     INFO = 'info',
     LIGHT = 'light',
     DARK = 'dark'
-  }
+}
 
 export default Alert;

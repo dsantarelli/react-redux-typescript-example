@@ -3,8 +3,9 @@
 | ![Statements](#statements# "Make me better!") | ![Branches](#branches# "Make me better!") | ![Functions](#functions# "Make me better!") | ![Lines](#lines# "Make me better!") |
 
 
-This project demonstrates my experiments on a [Create React App](https://github.com/facebook/create-react-app) with [TypeScript](https://www.typescriptlang.org/) and [Redux](https://redux.js.org/) in order to get to a more production worthy app. This app makes REST calls for listing and searching [Star Wars](https://swapi.co/) characters. This code shows how you could organize your Components and the Redux infrastructure in a more "real world" app.
+This project demonstrates my experiments on a [Create React App](https://github.com/facebook/create-react-app) with [TypeScript](https://www.typescriptlang.org/) and [Redux](https://redux.js.org/) in order to get to a more production worthy app. This app makes REST calls for listing and searching [Star Wars](https://swapi.dev/) characters. This code shows how you could organize your Components and the Redux infrastructure in a more "real world" app.
 
+![](demo.gif)
 
 ## Goals
 

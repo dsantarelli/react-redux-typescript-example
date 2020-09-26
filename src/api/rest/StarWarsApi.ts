@@ -9,7 +9,7 @@ import Planet from '../model/Planet';
 
 export class StarWarsApi {
 
-  private baseUrl = "https://swapi.co/api";
+  private baseUrl = "https://swapi.dev/api";
   private peopleUrl = `${this.baseUrl}/people/`;
   private filmsUrl = `${this.baseUrl}/films/`;
   private starshipsUrl = `${this.baseUrl}/starships/`;

@@ -71,8 +71,13 @@ export const getCharacterDetails = (character: Character) => {
 
       try {
         dispatch(getCharacterDetailsProgress(20, `Loading homeworld...`));
-        const h = await Axios.all([(character.homeworld) ? api.getPlanet(api.getEntityIdFromUrl(character.homeworld)) : Promise.resolve(null)]);
-        if (h && h[0] && h[0].data) characterDetails.homeworld = h[0].data
+        const h = await Axios.all([(character.homeworld) 
+                        ? api.getPlanet(api.getEntityIdFromUrl(character.homeworld)) 
+                        : Promise.resolve(null)]);
+
+        if (h && h[0] && h[0] != null) {
+          characterDetails.homeworld = h[0]!.data;
+        }
       }
       catch (e) {
         dispatch(getCharacterDetailsFailure(`Could not load homeworld for ${character.name}: ${e.message}`));

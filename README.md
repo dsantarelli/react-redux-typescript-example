@@ -3,8 +3,9 @@
 | ![Statements](https://img.shields.io/badge/Coverage-96%25-brightgreen.svg "Make me better!") | ![Branches](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg "Make me better!") | ![Functions](https://img.shields.io/badge/Coverage-92.31%25-brightgreen.svg "Make me better!") | ![Lines](https://img.shields.io/badge/Coverage-96%25-brightgreen.svg "Make me better!") |
 
 
-This project demonstrates my experiments on a [Create React App](https://github.com/facebook/create-react-app) with [TypeScript](https://www.typescriptlang.org/) and [Redux](https://redux.js.org/) in order to get to a more production worthy app. This app makes REST calls for listing and searching [Star Wars](https://swapi.co/) characters. This code shows how you could organize your Components and the Redux infrastructure in a more "real world" app.
+This project demonstrates my experiments on a [Create React App](https://github.com/facebook/create-react-app) with [TypeScript](https://www.typescriptlang.org/) and [Redux](https://redux.js.org/) in order to get to a more production worthy app. This app makes REST calls for listing and searching [Star Wars](https://swapi.dev/) characters. This code shows how you could organize your Components and the Redux infrastructure in a more "real world" app.
 
+![](demo.gif)
 
 ## Goals
 
